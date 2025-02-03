@@ -1,9 +1,10 @@
 from dataclasses import dataclass
 from datetime import datetime
-
+from typing import List
+import Project
 
 @dataclass
-class Profile():
+class Profile:
     profileId: int
     consultantId: str
     consultantName: str
@@ -22,8 +23,7 @@ class Profile():
     profileIndustrySectors: []
     profileTechnicalExpertise: []
     profileFunctionalExpertise: []
-    profileProjects: []
-    profileExperience: []
+    profileExperience: List[Project]
 
 
 

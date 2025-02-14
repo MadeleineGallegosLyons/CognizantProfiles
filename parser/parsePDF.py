@@ -4,6 +4,7 @@ import re
 import pymupdf
 import Profile as profile
 import Project as project
+import json
 #//TODO: make and query an SQL database to get the required sections to make it more robust and flexible for future templates
 #TODO: store type of section with section i.e. longform bullet
 REQUIRED_SECTIONS = [
@@ -93,10 +94,11 @@ def extract_contact_information(content):
             email = item["text"]
             content.remove(item)
     header = re.split(r'\s*[-–—]\s*', header) if header else None
+    job_title = re.sub(r"[\"“”]", "", header[1] if header else None)
     contact_info = {
         "name": header[0] if header else None,
         "email": email if email else None,
-        "job_title": header[1] if header else None
+        "job_title": job_title if job_title else None
     }
     return contact_info
 
@@ -170,11 +172,10 @@ def map_to_profile(sections):
     parsed_profile = profile.Profile(
         profileId = None,
         profileRef = None,
-        creationDate = datetime.now(),
+        creationDate = str(datetime.now()),
         profileState = sections["state"],
         profileName = sections["Name"],
         consultantName = None, #TODO: get from request context if possible
-        role = None, #TODO: get from request context if possible
         profileEmail= sections["Email"],
         profileJobTitle = sections["Job Title"],
         consultantId = None, #TODO: get from request context if possible
@@ -192,13 +193,16 @@ def map_to_profile(sections):
 
 def map_to_project(info, details):
     info = re.split(r'\s*[-–—]\s*', info)
-    parsed_project = project.Project(
-        projectType= info[0],
-        projectRole= info[1],
-        projectIndustrySector= info[2],
-        projectDetails = details
-    )
-    return parsed_project
+    project_json = {
+        "projectType": info[0],
+        "projectRole": info[1],
+        "projectIndustrySector": info[2],
+        "projectDetails": details
+    }
+    return project_json
+
+def map_to_json(profile):
+    return json.dumps(profile.__dict__)
 
 def main():
     """Main function to handle the program logic."""
@@ -220,8 +224,7 @@ def main():
 
     sections = parse_resume(content)
     profile = map_to_profile(sections)
-    print(profile)
-
+    print(map_to_json(profile))
 
 
 

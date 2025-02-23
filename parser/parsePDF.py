@@ -2,11 +2,15 @@ from datetime import datetime
 import os
 import re
 import pymupdf
-import Profile as profile
-import Project as project
+from Profile import Profile
 import json
-#//TODO: make and query an SQL database to get the required sections to make it more robust and flexible for future templates
-#TODO: store type of section with section i.e. longform bullet
+from azure.storage.blob import BlobServiceClient
+
+# Add the connection string to the Azure Blob Storage Account
+AZURE_STORAGE_CONNECTION_STRING = "add connection string"
+
+# //TODO: make and query an SQL database to get the required sections to make it more robust and flexible for future templates
+# TODO: store type of section with section i.e. longform bullet
 REQUIRED_SECTIONS = [
     "state",
     "name",
@@ -42,12 +46,14 @@ REGEX_PATTERNS = {
     "email": r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}',
 }
 
+
 def get_file_type(file_path):
     """Determines if the uploaded file is a PDF or a PowerPoint."""
     if file_path.endswith('.pdf'):
         return 'pdf'
     else:
         return 'unsupported'
+
 
 def read_pdf_with_metadata(file_path):
     """Reads text and formatting metadata from a PDF file."""
@@ -62,7 +68,7 @@ def read_pdf_with_metadata(file_path):
                     for line in block["lines"]:
                         for span in line["spans"]:
                             if span["text"] in REQUIRED_SECTIONS:
-                                if("Email" in span["text"]):
+                                if "Email" in span["text"]:
                                     current_section = "Email"
                                     content.append({
                                         "section": current_section,
@@ -74,11 +80,12 @@ def read_pdf_with_metadata(file_path):
                             content.append({
                                 "section": current_section,
                                 "text": span["text"],
-                                })
+                            })
         return content
     except Exception as e:
         print(f"Error reading PDF: {e}")
         return None
+
 
 def extract_contact_information(content):
     """Extracts contact information using regex."""
@@ -102,18 +109,19 @@ def extract_contact_information(content):
     }
     return contact_info
 
+
 def parse_resume(content):
     """Parses text and metadata into resume sections."""
     sections = {section: None for section in REQUIRED_SECTIONS}
     contact_info = extract_contact_information(content)
-    # Group Text by Section
+    # Group text by section
     current_section = None
     for item in content:
         text = item["text"].strip()
         current_section = item["section"].strip() if item["section"] else current_section
-        if current_section and text: #If the current section is not None and the text is not empty
-            if current_section in sections: #If the current section is in the list of required sections
-                if sections[current_section]: 
+        if current_section and text:
+            if current_section in sections:
+                if sections[current_section]:
                     if current_section == "Experience":
                         sections[current_section].append(text)
                     else:
@@ -124,12 +132,13 @@ def parse_resume(content):
     sections["Email"] = contact_info["email"]
     sections["Job Title"] = contact_info["job_title"]
 
-    for section in sections: #change to a switch case
+    for section in sections:
         if sections[section]:
             sections[section] = bullet_section_helper(sections[section]) if section in BULLET_SECTIONS else sections[section]
             sections[section] = longform_section_helper(sections[section]) if section in LONGFORM_SECTIONS else sections[section]
             sections[section] = experience_section_helper(sections[section]) if section == "Experience" else sections[section]
     return sections
+
 
 def experience_section_helper(section):
     """Helper function to parse experience sections."""
@@ -156,40 +165,44 @@ def experience_section_helper(section):
         projects.append(map_to_project(info, details))
     return projects
 
+
 def longform_section_helper(section):
     """Helper function to parse longform sections."""
     section = re.sub(r"• ", "", section)
     return section
 
+
 def bullet_section_helper(section):
     """Helper function to parse bullet sections."""
-    # Split the text into bullet points
     bullets = section.split("•")
     bullets = [bullet.strip() for bullet in bullets if bullet.strip()]
     return bullets
 
+
 def map_to_profile(sections):
-    parsed_profile = profile.Profile(
-        profileId = None,
-        profileRef = None,
-        creationDate = str(datetime.now()),
-        profileState = sections["state"],
-        profileName = sections["Name"],
-        consultantName = None, #TODO: get from request context if possible
-        profileEmail= sections["Email"],
-        profileJobTitle = sections["Job Title"],
-        consultantId = None, #TODO: get from request context if possible
-        profileExecutiveSummary = sections["Executive Summary"],
-        profileTechnicalExpertise = sections["Technical Expertise"],
-        profileFunctionalExpertise = sections["Functional Expertise"],
-        profileExperience = sections["Experience"],
-        profileMobility = sections["Mobility"],
-        profileIndustrySectors = sections["Industry Sectors"],
-        profileLanguages = sections["Languages Spoken"],
-        profileCertifications = sections["Certifications"],
-        profileMethodologies = sections["Methodologies"]
+    parsed_profile = Profile(
+        profileId=None,
+        profileRef=None,
+        creationDate=str(datetime.now()),
+        profileState=sections["state"],
+        profileName=sections["Name"],
+        role=None,  # TODO: get from request context if possible
+        consultantName=None,  # TODO: get from request context if possible
+        profileEmail=sections["Email"],
+        profileJobTitle=sections["Job Title"],
+        consultantId=None,  # TODO: get from request context if possible
+        profileExecutiveSummary=sections["Executive Summary"],
+        profileTechnicalExpertise=sections["Technical Expertise"],
+        profileFunctionalExpertise=sections["Functional Expertise"],
+        profileExperience=sections["Experience"],
+        profileMobility=sections["Mobility"],
+        profileIndustrySectors=sections["Industry Sectors"],
+        profileLanguages=sections["Languages Spoken"],
+        profileCertifications=sections["Certifications"],
+        profileMethodologies=sections["Methodologies"]
     )
     return parsed_profile
+
 
 def map_to_project(info, details):
     info = re.split(r'\s*[-–—]\s*', info)
@@ -201,8 +214,33 @@ def map_to_project(info, details):
     }
     return project_json
 
+
 def map_to_json(profile):
     return json.dumps(profile.__dict__)
+
+
+def upload_json_to_blob(json_data, blob_name):
+    """
+    Uploads the given JSON data as a blob to Azure Blob Storage using the local connection string.
+    """
+    connection_string = AZURE_STORAGE_CONNECTION_STRING
+    if not connection_string:
+        raise ValueError("Azure Storage connection string is not set. Please set the AZURE_STORAGE_CONNECTION_STRING variable.")
+
+    blob_service_client = BlobServiceClient.from_connection_string(connection_string)
+    container_name = "profiles"
+    container_client = blob_service_client.get_container_client(container_name)
+
+    try:
+        container_client.create_container()
+        print(f"Container '{container_name}' created.")
+    except Exception as e:
+        print(f"Container '{container_name}' may already exist or could not be created: {e}")
+
+    blob_client = container_client.get_blob_client(blob_name)
+    blob_client.upload_blob(json_data, overwrite=True)
+    print(f"Successfully uploaded blob '{blob_name}'.")
+
 
 def main():
     """Main function to handle the program logic."""
@@ -224,11 +262,24 @@ def main():
 
     sections = parse_resume(content)
     profile = map_to_profile(sections)
-    print(map_to_json(profile))
+    profile_json = map_to_json(profile)
+    print("Parsed Profile JSON:")
+    print(profile_json)
 
+    # Create a blob name based on the consultant's name if available.
+    if profile.profileName and isinstance(profile.profileName, str) and profile.profileName.strip():
+        # Use the consultant's name (e.g., "C. Orr.json")
+        blob_name = f"{profile.profileName.strip()}.json"
+    else:
+        # Fallback to a timestamp-based name if the name is not available.
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        blob_name = f"profile_{timestamp}.json"
 
+    try:
+        upload_json_to_blob(profile_json, blob_name)
+    except Exception as e:
+        print(f"Failed to upload JSON to Azure Blob Storage: {e}")
 
 
 if __name__ == "__main__":
     main()
-

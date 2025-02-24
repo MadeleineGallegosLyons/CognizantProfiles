@@ -1,4 +1,4 @@
-CREATE TABLE dbo.Profile_Section (
+CREATE TABLE dbo.Section_Contents (
     section_id INT IDENTITY(1,1) PRIMARY KEY,
     profile_id INT,
     section_category_id INT,

@@ -7,6 +7,9 @@ cd into parser
 run this command to install pymupdf:
 pip install --upgrade pymupdf
 
+run this command to install azure.storage.blob:
+pip install azure-storage-blob azure-identity
+
 To run parser: 
 python parsePDF.py
 >> copy paste your profile's path

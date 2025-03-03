@@ -10,7 +10,6 @@ class Profile:
     consultantName: str
     profileRef: str
     creationDate: datetime
-    role: str
     profileState: str
     profileName: str
     profileJobTitle: str

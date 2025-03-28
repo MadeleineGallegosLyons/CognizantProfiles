@@ -1,2 +1,13 @@
-com/example/controllers/ProfileController.class
+app/application/services/ProfileService.class
+app/domain/Profile$ProfileBuilder.class
+app/domain/SectionContent.class
+app/domain/SectionCategory.class
 com/example/CapstoneProfileApplication.class
+app/infrastructure/SectionCategoryRepository.class
+app/domain/SectionCategory$SectionCategoryBuilder.class
+app/infrastructure/ProfileRepository.class
+app/infrastructure/SectionContentRepository.class
+app/application/services/SectionCategoryService.class
+app/domain/SectionContent$SectionContentBuilder.class
+app/application/services/SectionContentService.class
+app/domain/Profile.class

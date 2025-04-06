@@ -16,7 +16,7 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 
 @Service
-public class ProfileImportService {
+public class ProfileImportRepository {
 
     @Value("${azure.storage.connection-string}")
     private String connectionString;
@@ -29,7 +29,7 @@ public class ProfileImportService {
     private final SectionCategoryRepository sectionCategoryRepository;
     private final SectionContentRepository sectionContentRepository;
 
-    public ProfileImportService(ObjectMapper objectMapper,
+    public ProfileImportRepository(ObjectMapper objectMapper,
                                 ProfileRepository profileRepository,
                                 SectionCategoryRepository sectionCategoryRepository,
                                 SectionContentRepository sectionContentRepository) {

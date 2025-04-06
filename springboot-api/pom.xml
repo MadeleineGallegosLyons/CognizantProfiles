@@ -128,6 +128,24 @@
           </annotationProcessorPaths>
         </configuration>
       </plugin>
+
+      <!-- ✅ Add this -->
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+        <version>3.2.1</version>
+        <configuration>
+          <mainClass>app.CapstoneProfileApplication</mainClass>
+        </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>repackage</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
     </plugins>
   </build>
 </project>

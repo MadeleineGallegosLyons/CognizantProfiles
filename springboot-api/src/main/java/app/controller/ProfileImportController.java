@@ -1,7 +1,7 @@
 package app.controller;
 
 import app.dto.BlobImportRequest;
-import app.infrastructure.ProfileImportService;
+import app.infrastructure.ProfileImportRepository;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,15 +12,15 @@ import org.springframework.http.ResponseEntity;
 @RequestMapping("/api/profiles")
 public class ProfileImportController {
 
-    private final ProfileImportService profileImportService;
+    private final ProfileImportRepository profileImportRepository;
 
-    public ProfileImportController(ProfileImportService profileImportService) {
-        this.profileImportService = profileImportService;
+    public ProfileImportController(ProfileImportRepository profileImportRepository) {
+        this.profileImportRepository = profileImportRepository;
     }
 
     @PostMapping("/import")
     public ResponseEntity<String> importProfileFromBlob(@RequestBody BlobImportRequest request) {
-        profileImportService.importFromBlob(request.getBlobName());
+        profileImportRepository.importFromBlob(request.getBlobName());
         return ResponseEntity.ok("Profile import triggered for blob: " + request.getBlobName());
     }
 }

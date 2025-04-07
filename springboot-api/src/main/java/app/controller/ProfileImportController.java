@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.http.ResponseEntity;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/profiles")
@@ -19,7 +20,7 @@ public class ProfileImportController {
     }
 
     @PostMapping("/import")
-    public ResponseEntity<String> importProfileFromBlob(@RequestBody BlobImportRequest request) {
+    public ResponseEntity<String> importProfileFromBlob(@Valid @RequestBody BlobImportRequest request) {
         profileImportRepository.importFromBlob(request.getBlobName());
         return ResponseEntity.ok("Profile import triggered for blob: " + request.getBlobName());
     }

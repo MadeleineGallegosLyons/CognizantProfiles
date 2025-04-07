@@ -1,6 +1,10 @@
 package app.dto;
 
+import jakarta.validation.constraints.NotBlank;
+
 public class BlobImportRequest {
+
+    @NotBlank(message = "Blob name is required")
     private String blobName;
 
     public String getBlobName() {
@@ -11,4 +15,3 @@ public class BlobImportRequest {
         this.blobName = blobName;
     }
 }
-

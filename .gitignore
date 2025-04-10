@@ -7,7 +7,6 @@
 
 # Maven
 springboot-api/target/
-springboot-api/src/main/resources/application.properties
 dependency-reduced-pom.xml
 buildNumber.properties
 release.properties

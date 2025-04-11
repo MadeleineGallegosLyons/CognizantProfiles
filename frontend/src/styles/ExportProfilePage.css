@@ -1,0 +1,77 @@
+/* ExportProfilePage.css */
+
+html,
+body {
+  background-color: #f2f2f2;
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.export-page-wrapper {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 3rem 1rem;
+  background-color: #f2f2f2;
+}
+
+.export-card {
+  background-color: #ffffff;
+  padding: 2rem 2.5rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  max-width: 600px;
+  width: 100%;
+}
+
+.export-card h2 {
+  margin-top: 0;
+  font-size: 1.8rem;
+  text-align: center;
+  color: #0a0a56;
+}
+
+.export-card p {
+  text-align: center;
+  color: #555;
+  margin-bottom: 2rem;
+}
+
+
+.export-btn {
+  display: block;
+  width: 100%;
+  margin-bottom: 1rem;
+  padding: 0.75rem;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.export-btn.pdf {
+  background-color: #0a0a56;
+  color: white;
+}
+
+.export-btn.pdf:hover {
+  background-color: #1a1a7a;
+}
+
+.export-btn.disabled {
+  background-color: #ccc;
+  color: #666;
+  cursor: not-allowed;
+}
+
+.export-btn.back {
+  margin-top: 1.5rem;
+  background-color: transparent;
+  color: #0a0a56;
+  font-weight: normal;
+  text-decoration: underline;
+  border: none;
+}

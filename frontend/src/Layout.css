@@ -1,0 +1,37 @@
+/* Layout.css */
+@font-face {
+    font-family: 'Vilane';
+    src: url('./assets/fonts/Vilane Extra Light.ttf') format('ttf');
+         
+
+  }
+  
+.layout {
+    min-height: 100vh;
+    background-color: #E5E5E5; 
+  }
+  
+  .header {
+    background-color: #00004D; 
+    height: 60px;
+    display: flex;
+    align-items: center;
+    padding-left: 20px;
+  }
+  .header-logo {
+    height: 40px;         
+    margin-right: 10px;     
+  }
+  
+  .header-text {
+    color: white;
+    
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  .content {
+    position: relative;
+    
+  }
+  

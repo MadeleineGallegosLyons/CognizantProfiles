@@ -31,4 +31,6 @@ public interface SectionContentRepository extends JpaRepository<SectionContent, 
             @Param("query") String query,
             @Param("executiveSummaryCategoryId") Long executiveSummaryCategoryId
     );
+
+    List<SectionContent> findByProfileId(Long profileId);
 }

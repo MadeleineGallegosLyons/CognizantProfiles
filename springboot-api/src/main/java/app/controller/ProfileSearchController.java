@@ -2,6 +2,7 @@ package app.controllers;
 
 import app.application.services.ProfileService;
 import app.dto.ProfileSearchResultDto;
+import app.dto.ProfileViewDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,5 +20,11 @@ public class ProfileSearchController {
     public ResponseEntity<List<ProfileSearchResultDto>> searchProfiles(@RequestParam String query) {
         List<ProfileSearchResultDto> results = profileService.searchProfilesByContent(query);
         return ResponseEntity.ok(results);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ProfileViewDto> getProfileView(@PathVariable Long id) {
+        ProfileViewDto profile = profileService.getProfileView(id);
+        return ResponseEntity.ok(profile);
     }
 }

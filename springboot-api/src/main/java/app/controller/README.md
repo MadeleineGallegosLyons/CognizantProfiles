@@ -37,7 +37,7 @@ Once running, the API should now be running on http://localhost:8080.
 ### 1. Import Profiles
 
 ### 2. Search Profiles
-- **GET** `/api/profiles/search?query={query}`
+- **GET** `/api/profile-search?query={query}`
 - **Parameters**:
   - `query`: The search term to look for in the profiles.
 ```bash
@@ -56,7 +56,7 @@ http://localhost:8080/api/profile-search?query=<search-term>
 ]
 ```
 
-### 2. Profile View
+### 3. Profile View
 - **GET** `/api/profile-search/{id}`
 - **Parameters**:
   - `id`: The ID of the profile you want to view.

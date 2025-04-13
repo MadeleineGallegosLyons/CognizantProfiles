@@ -1,0 +1,54 @@
+# --- Java ---
+*.class
+*.jar
+*.war
+*.ear
+*.log
+
+# Maven
+springboot-api/target/
+dependency-reduced-pom.xml
+buildNumber.properties
+release.properties
+
+# --- IntelliJ IDEA ---
+.idea/
+*.iml
+*.iws
+out/
+
+# --- OS-specific ---
+.DS_Store
+Thumbs.db
+
+# --- Logs ---
+*.log
+
+# --- Test reports ---
+*.xml
+*.txt
+
+# --- VS Code (if applicable) ---
+.vscode/
+
+# --- Local env files (optional) ---
+.env
+
+# Node
+node_modules/
+.env
+dist/
+build/
+
+# Java
+target/
+
+# System
+.DS_Store
+*.log
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+pymupdf-venv/

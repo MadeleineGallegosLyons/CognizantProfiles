@@ -1,0 +1,114 @@
+/* Main container */
+.results-container {
+    background-color: #E5E5E5; 
+    min-height: calc(100vh - 60px); 
+    padding: 20px;
+  }
+  
+ 
+  .results-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  
+ 
+  .search-again-button {
+    background-color: #00004D;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    font-size: 14px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  
+  .search-again-button:hover {
+    background-color: #000066;
+  }
+  
+  .search-icon {
+    margin-left: 8px;
+  }
+  
+  /* Page title */
+  .searchr-title {
+    font-size: 24px;
+    text-align: center;
+    color: #6B6B6B;
+    margin: 0;
+  }
+  
+  
+  .search-query {
+    text-align: center;
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+
+  .results-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 auto;
+    max-width: 600px;
+  }
+  
+
+  .result-item {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 15px;
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .result-info {
+    display: flex;
+    gap: 10px;
+  }
+  
+  
+  .profile-icon {
+    font-size: 24px;
+  }
+  
+  
+  .result-name {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 5px;
+  }
+  
+  .result-summary {
+    font-size: 14px;
+    color: #666;
+  }
+  
+  
+  .view-profile-button {
+    background-color: #00004D;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    font-size: 14px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  
+  .view-profile-button:hover {
+    background-color: #000066;
+  }
+  
+  .arrow {
+    margin-left: 5px;
+  }
+  

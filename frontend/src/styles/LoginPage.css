@@ -1,0 +1,96 @@
+
+.login-header {
+  display: flex;
+  flex-direction: column; /* stack vertically */
+  align-items: center;
+  justify-content: center;
+  padding: 1rem 0;
+  margin-bottom: 1rem;
+  background-color: transparent; /* or keep the blue if intentional */
+}
+  
+  .login-header-text {
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+  }
+
+.login-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #E5E5E5;
+  }
+
+  .loginsub-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 20vh;
+    width: 75vh;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.08);
+    padding: 3rem 2rem;
+}
+  
+  .login-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #6B6B6B;
+    margin-bottom: 20px;
+  }
+  
+  .login-input-container {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    margin-bottom: 15px;
+  }
+  
+  .login-input-container label {
+    font-size: 14px;
+    color: #6B6B6B;
+  }
+  
+  .login-input {
+    height: 40px;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-top: 5px;
+  }
+  
+  .login-button {
+    width: 300px;
+    height: 40px;
+    background-color: #00004D;
+    color: white;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    margin-top: 20px;
+  }
+  
+  .login-button:hover {
+    background-color: #000066;
+  }
+
+ 
+  
+  .app-title {
+    font-size: 2rem;
+    margin: 0;
+    color: #0a0a56;
+  }
+  
+  .app-subtitle {
+    font-size: 1.1rem;
+    color: #555;
+    margin-top: 0.3rem;
+  }
+  

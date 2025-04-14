@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import jsPDF from "jspdf";
 import "./styles/ProfileView.css"; 
+import ExportButton from "./ExportButton"; // Import the ExportButton component
 
 // Dummy profile data (later replaced with backend fetch)
 const dummyProfiles = [
@@ -112,9 +113,8 @@ function ProfileView() {
           <button className="back-button" onClick={() => navigate("/results")}>
             ⬅ Search Results
           </button>
-          <button className="export-button" onClick={handleExportPDF}>
-          Export as PDF ⬇
-        </button>
+          <ExportButton 
+            sharepointRef={{ profile.sharepointRef }} /> {/* Use the ExportButton component */}
 
           <h2>{profile.name}</h2>
           <p className="profile-summary">{profile.summary}</p>

@@ -37,13 +37,13 @@ Once running, the API should now be running on http://localhost:8080.
 ### 1. Import Profiles
 
 ### 2. Search Profiles
-- **GET** `/api/profile-search?query={query}`
+- **GET** `/api/profile-search?query={keywords}`
 - **Parameters**:
-  - `query`: The search term to look for in the profiles.
+  - `keywords`: A comma-separated list of keywords to search for in profile content (ex. `azure, data, it analyst`). 
 ```bash
-http://localhost:8080/api/profile-search?query=<search-term>
+http://localhost:8080/api/profile-search?query=<keywords>
 ```
-- **Response**: Returns a list of profiles matching the search term.
+- **Response**: Returns a list of profiles that match one or more of the keywords, ranked by relevance (i.e., number of keyword matches).
 - **Example**: 
 ```bash
 [

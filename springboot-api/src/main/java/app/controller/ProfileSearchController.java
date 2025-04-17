@@ -6,6 +6,7 @@ import app.dto.ProfileViewDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import java.util.Arrays;
 
 import java.util.List;
 
@@ -18,7 +19,12 @@ public class ProfileSearchController {
 
     @GetMapping
     public ResponseEntity<List<ProfileSearchResultDto>> searchProfiles(@RequestParam String query) {
-        List<ProfileSearchResultDto> results = profileService.searchProfilesByContent(query);
+        List<String> keywords = Arrays.stream(query.split(","))
+                .map(String::trim)
+                .filter(k -> !k.isEmpty())
+                .toList();
+
+        List<ProfileSearchResultDto> results = profileService.searchProfilesByKeywords(keywords);
         return ResponseEntity.ok(results);
     }
 

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface SectionContentRepository extends JpaRepository<SectionContent, Long> {
+public interface SectionContentRepository extends JpaRepository<SectionContent, Long>, SectionContentRepositoryCustom {
 
     @Query(value = """
         SELECT p.id, p.name, p.sharepoint_ref,

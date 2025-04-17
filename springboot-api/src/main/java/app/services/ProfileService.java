@@ -37,10 +37,10 @@ public class ProfileService {
         profileRepository.deleteById(id);
     }
 
-    public List<ProfileSearchResultDto> searchProfilesByContent(String query) {
-        Long executiveSummaryCategoryId = 4L; // ID for "Executive Summary"
+    public List<ProfileSearchResultDto> searchProfilesByKeywords(List<String> keywords) {
+        Long executiveSummaryCategoryId = 4L;
 
-        List<Object[]> rawResults = sectionContentRepository.searchProfilesWithSummaryRanked(query, executiveSummaryCategoryId);
+        List<Object[]> rawResults = sectionContentRepository.searchProfilesWithKeywordsRanked(keywords, executiveSummaryCategoryId);
 
         return rawResults.stream().map(row -> {
             ProfileSearchResultDto dto = new ProfileSearchResultDto();
@@ -49,7 +49,7 @@ public class ProfileService {
             dto.setSharePointRef((String) row[2]);
             dto.setExecutiveSummary((String) row[3]);
             return dto;
-        }).collect(Collectors.toList());
+        }).toList();
     }
 
     public ProfileViewDto getProfileView(Long profileId) {

@@ -3,6 +3,7 @@ import { useParams, useNavigate, useLocation } from "react-router-dom";
 import jsPDF from "jspdf";
 import "./styles/ProfileView.css";
 import LoadingSpinner from "./components/LoadingSpinner";
+import ExportButton from "./ExportButton";
 
 function Accordion({ title, content, defaultOpen = false }) {
   const [isOpen, setIsOpen] = useState(defaultOpen);
@@ -105,10 +106,7 @@ function ProfileView() {
           >
             ⬅ Search Results
           </button>
-          <button className="export-button" onClick={handleExportPDF}>
-            Export as PDF ⬇
-          </button>
-
+          <ExportButton sharepointRef={ profile.sharePointRef } />
           <h2>{profile.name}</h2>
           <p className="profile-summary">{profile.jobTitle}</p>
 

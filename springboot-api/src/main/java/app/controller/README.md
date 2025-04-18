@@ -31,17 +31,40 @@ java -jar capstone-profile-0.0.1-SNAPSHOT.jar
 
 ### 4. Access the API
 Once running, the API should now be running on http://localhost:8080.
+You can also access the deployed API at: 
+```bash
+  https://capstone-api.azurewebsites.net
+```
 
 ## Hit Endpoints
 
 ### 1. Import Profiles
+- **POST** `/api/profiles/import`
+- **Parameters**:
+  - `blobName`: The full file name of the JSON blob in the container (must include the .json extension).
+```bash
+https://capstone-api.azurewebsites.net/api/profiles/import
+```
+- **Request Body**:
+```bash
+{
+  "blobName": "2025-04-14T17-52-45Z.json"
+}
+```
+- **Response**: Imports a specific profile JSON from Azure Blob Storage into the database. This is used to bring in newly uploaded or updated profiles on demand.
+- **Example**:
+```bash
+{
+  "message": "Successfully imported profile from blob: 2025-04-14T17-52-45Z.json"
+}
+```
 
 ### 2. Search Profiles
 - **GET** `/api/profile-search?query={keywords}`
 - **Parameters**:
   - `keywords`: A comma-separated list of keywords to search for in profile content (ex. `azure, data, it analyst`). 
 ```bash
-http://localhost:8080/api/profile-search?query=<keywords>
+https://capstone-api.azurewebsites.net/api/profile-search?query=<keywords>
 ```
 - **Response**: Returns a list of profiles that match one or more of the keywords, ranked by relevance (i.e., number of keyword matches).
 - **Example**: 
@@ -61,7 +84,7 @@ http://localhost:8080/api/profile-search?query=<keywords>
 - **Parameters**:
   - `id`: The ID of the profile you want to view.
 ```bash
-http://localhost:8080/api/profile-search/<id>
+https://capstone-api.azurewebsites.net/api/profile-search/<id>
 ```
 - **Response**: Returns detailed information about the selected profile, grouped by section.
 - **Example**:

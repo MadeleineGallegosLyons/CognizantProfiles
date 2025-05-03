@@ -1,4 +1,4 @@
-package app.controllers;
+package app.controller;
 
 import app.application.services.ProfileService;
 import app.dto.ProfileSearchResultDto;
@@ -7,9 +7,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.Arrays;
-
+import org.springframework.web.bind.annotation.CrossOrigin;
 import java.util.List;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/profile-search")
 @RequiredArgsConstructor

@@ -33,8 +33,11 @@ public class ProfileService {
         return profileRepository.save(profile);
     }
 
-    public void deleteProfile(Long id) {
-        profileRepository.deleteById(id);
+    public boolean deleteProfileById(Long id) {
+        return profileRepository.findById(id).map(profile -> {
+            profileRepository.delete(profile);
+            return true;
+        }).orElse(false);
     }
 
     public List<ProfileSearchResultDto> searchProfilesByKeywords(List<String> keywords) {

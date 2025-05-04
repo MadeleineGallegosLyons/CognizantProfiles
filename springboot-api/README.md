@@ -1,50 +1,85 @@
-# Capstone Profile API
+## ⚙️ Setup and Configuration Guide for Springboot API
 
-## Overview
-This project is a **Spring Boot REST API** for managing profiles. It connects to an **Azure SQL Database** and provides RESTful endpoints for GET/POST/PUT/DELETE operations.
+### 1. 📦 Dependencies
 
-## Prerequisites
-Before running this project, ensure you have the following installed:
+This project uses **Maven** to manage dependencies. Key technologies included:
 
-- **Maven** ([Download Maven](https://maven.apache.org/download.cgi))
-- **Postman** (optional, for API testing - [Download Postman](https://www.postman.com/downloads/))
+- Spring Boot Web & Data JPA
+- Microsoft SQL Server JDBC Driver
+- Azure Blob Storage SDK
+- JUnit 5 + Mockito for testing
+- Lombok for reducing boilerplate code
 
-## Setup Instructions
+All dependencies are defined in `pom.xml`. To download them locally, run:
 
-### Configure Database Connection
-
-#### **Edit `src/main/resources/application.properties`**:
-```properties
-spring.datasource.url=jdbc:sqlserver://your-server.database.windows.net:1433;database=your-database
-spring.datasource.username=your-username
-spring.datasource.password=your-password
-spring.datasource.driver-class-name=com.microsoft.sqlserver.jdbc.SQLServerDriver
-
-spring.jpa.database-platform=org.hibernate.dialect.SQLServerDialect
-spring.jpa.hibernate.ddl-auto=update
-```
-**Replace** `your-server`, `your-database`, `your-username`, and `your-password` with your actual Azure SQL credentials.
-
-### Install Dependencies
-Run the following command to install all necessary dependencies for Spring Boot:
 ```bash
 mvn clean install
 ```
 
-### Run the Spring Boot Application
+---
+
+### 2. 🔐 application.properties
+
+Before running the project, configure the following values in `src/main/resources/application.properties`:
+
+```properties
+# Application Info
+spring.application.name=capstone-api
+
+# Azure SQL Database
+spring.datasource.url=jdbc:sqlserver://<your-db-server>.database.windows.net:1433;database=<your-db-name>;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;
+spring.datasource.username=<your-username>
+spring.datasource.password=<your-password>
+spring.datasource.driver-class-name=com.microsoft.sqlserver.jdbc.SQLServerDriver
+
+# Azure Blob Storage
+azure.storage.connection-string=DefaultEndpointsProtocol=https;AccountName=<your-account>;AccountKey=<your-key>;EndpointSuffix=core.windows.net
+azure.storage.container-name=profiles
+
+# JPA & Hibernate
+spring.jpa.database-platform=org.hibernate.dialect.SQLServerDialect
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+
+# SQL Initialization
+spring.datasource.initialization-mode=always
+spring.sql.init.mode=always
+```
+
+> 💡 **Do not commit credentials**. Use environment variables or secrets management for deployment.
+
+---
+
+### 3. ▶️ Running the API Locally
+
+To start the Spring Boot app locally:
+
 ```bash
 mvn spring-boot:run
 ```
-Once the server starts, you should see output confirming that **Tomcat started on port 8080**.
 
-### Test the API in Postman
-#### **Check if the API is running:**
-- Open **Postman** 
-- Send a **GET request** to:
+This will launch the API at:
+
 ```
-http://localhost:8080/api/test
+http://localhost:8080
 ```
-Expected Response:
-```json
-"Hello, Spring Boot is working!"
+
+Make sure your Azure SQL and Blob Storage credentials are valid and accessible.
+
+---
+
+### 4. 🧪 Running Tests
+
+This project uses **JUnit 5** and **Mockito** for unit and integration testing.
+
+To run all tests:
+
+```bash
+mvn test
 ```
+
+Tests are located in `src/test/java/app/controller/` and `src/test/java/app/services/`.
+
+---
+
+Let me know if you want to add Docker setup or deployment instructions too!

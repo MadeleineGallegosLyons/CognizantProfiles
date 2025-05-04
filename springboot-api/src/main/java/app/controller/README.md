@@ -171,3 +171,15 @@ https://capstone-api.azurewebsites.net/api/profile-search/<id>
     ]
 }
 ```
+### 4. Delete Profile
+- **DELETE** `/api/profile-delete/{id}`
+- **Parameters**:
+  - `id`: The ID of the profile to delete.
+```bash
+https://capstone-api.azurewebsites.net/api/profile-delete/<id>
+```
+- **Response**: Returns a confirmation message if the profile and all associated section content were successfully deleted.
+- **Example**:
+```bash
+Profile with ID 7 has been deleted.
+```
